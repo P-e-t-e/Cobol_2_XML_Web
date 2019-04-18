@@ -25,7 +25,7 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("myresource")
 public class MyResource {
 
-	private Cobol2XML parser;
+	private Cobol2XML parser = new Cobol2XML();
     /**
      * Method handling HTTP POST requests. The returned object will be sent
      * to the client as "text/plain" media type. 
@@ -53,11 +53,13 @@ public class MyResource {
 
 			File file;
 
+			System.out.println("Debug: in upload file endpoint");
 			try{
+				System.out.println("Debug: about to parse file");
 				 file = parser.parseText(uploadedInputStream);
 				return Response.status(200).entity(file).build();
 			} catch (Exception e){
-				System.out.println("Parser Failed: " + e.getMessage());
+				System.out.println("Parser Failed: " + e.getMessage() + e.toString());
 			}
 
 			//String output = "File uploaded to : " + uploadedFileLocation;

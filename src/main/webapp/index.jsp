@@ -4,8 +4,8 @@
     
     	<form  action="/demorest/webapi/myresource" method="post" enctype="multipart/form-data">
 		
-			<label for ='name'>Select a file :</label>
-			<input type="file" name="file"/>
+			<label for="file">Select a file :</label>
+			<input id="file" type="file" name="file"/>
 			<br><br>
 			<button name="submit" type="submit">Submit File</button>
 		</form>
