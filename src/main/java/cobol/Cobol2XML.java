@@ -46,7 +46,7 @@ public class Cobol2XML {
 	/**
 	 * @throws Exception
 	 */
-	public File parseText(FileInputStream input) throws Exception {
+	public File parseText(InputStream input) throws Exception {
 		System.out.println("Cobol2XML V0.1.0");
 		XMLPayload xmlp = new XMLPayload();
 		

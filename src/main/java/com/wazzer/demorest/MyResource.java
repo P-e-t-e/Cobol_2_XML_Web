@@ -45,38 +45,45 @@ public class MyResource {
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
 
-			String uploadedFileLocation = "C://Users//Warren Kelly//Desktop//RestApi//testFile/" + fileDetail.getFileName();
+			//String uploadedFileLocation = "C://Users//Warren Kelly//Desktop//RestApi//testFile/" + fileDetail.getFileName();
 			
 
 			// save it
-			writeToFile(uploadedInputStream, uploadedFileLocation);
+			//writeToFile(uploadedInputStream, uploadedFileLocation);
 
-			String output = "File uploaded to : " + uploadedFileLocation;
+			File file;
 
-			return Response.status(200).entity(output).build();
+			try{
+				 file = parser.parseText(uploadedInputStream);
+				return Response.status(200).entity(file).build();
+			} catch (Exception e){
+				System.out.println("Parser Failed: " + e.getMessage());
+			}
 
+			//String output = "File uploaded to : " + uploadedFileLocation;
+		return Response.status(400).build();
 		}
 
 		// save uploaded file to new location
-		private void writeToFile(InputStream uploadedInputStream,
-			String uploadedFileLocation) {
-
-			try {
-				OutputStream out = new FileOutputStream(new File(
-						uploadedFileLocation));
-				int read = 0;
-				byte[] bytes = new byte[1024];
-
-				out = new FileOutputStream(new File(uploadedFileLocation));
-				while ((read = uploadedInputStream.read(bytes)) != -1) {
-					out.write(bytes, 0, read);
-				}
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-
-		}
+//		private void writeToFile(InputStream uploadedInputStream,
+//			String uploadedFileLocation) {
+//
+//			try {
+//				OutputStream out = new FileOutputStream(new File(
+//						uploadedFileLocation));
+//				int read = 0;
+//				byte[] bytes = new byte[1024];
+//
+//				out = new FileOutputStream(new File(uploadedFileLocation));
+//				while ((read = uploadedInputStream.read(bytes)) != -1) {
+//					out.write(bytes, 0, read);
+//				}
+//				out.flush();
+//				out.close();
+//			} catch (IOException e) {
+//
+//				e.printStackTrace();
+//			}
+//
+//		}
 }
