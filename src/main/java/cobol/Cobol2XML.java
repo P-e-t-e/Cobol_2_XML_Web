@@ -61,9 +61,9 @@ public class Cobol2XML {
 		 * A rather crude approach is to hard code the filename for the cobol source file, like this
 		 * InputStream is = new FileInputStream("C:\\Users\\sgs442\\eclipse-workspace\\CobolParser1\\base.cbl");
 		 */
-		JFileChooser chooser = new JFileChooser();
-		System.out.println("Choose an input file");
-		chooser.showOpenDialog(null);
+//		JFileChooser chooser = new JFileChooser();
+//		System.out.println("Choose an input file");
+//		chooser.showOpenDialog(null);
 		InputStream is = input;
 		BufferedReader r = 	new BufferedReader(new InputStreamReader(is));
 
@@ -89,7 +89,8 @@ public class Cobol2XML {
 		}
 		//System.out.println("Choose an output file");
 		//chooser.showOpenDialog(null);
-		File newFile = xmlp.writeFile(Math.random()*1000 + "file.cbl");
+	
+		File newFile = xmlp.writeFile(Math.random()*1000 + "file.xml");
 		r.close();
 		return newFile;
 	}
