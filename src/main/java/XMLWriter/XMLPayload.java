@@ -220,7 +220,7 @@ public class XMLPayload {
 	}
 	
 	public File writeFile(String filename) {
-		File outputFile = new File(filename);
+		File outputFile = new File("./", filename);
 		try {
 		// write the content into xml file
 		// System.out.println("WriteFile Filename: " + filename);
