@@ -3,6 +3,38 @@ var fileData = {};
 var graph = new Springy.Graph();
 var nodes = {};
 
+document.getElementById('import').onclick = function() {
+	var files = document.getElementById('selectFiles').files;
+  console.log(files);
+  if (files.length <= 0) {
+    return false;
+  }
+  
+  var fr = new FileReader();
+  
+  fr.onload = function(e) { 
+  	console.log(e);
+    var result = JSON.parse(e.target.result);
+    console.log(result);
+    Object.keys(result).forEach((key) => {
+    	console.log(key);
+    	if(key==='filedata'){
+    		fileData = result.filedata;
+    		nodes = {}; //reset nodes
+    	} else if(key==='nodes'){
+    		//nodes = result.nodes;
+    	} else {
+    		console.log('unknown key in upload save file');
+    	}
+    });
+    initEdges();
+  }
+  
+  fr.readAsText(files.item(0));
+  //recreate nodes from filedata
+  
+};
+
 
 /**
 * Setup graph layout
@@ -19,7 +51,7 @@ var layout = new Springy.Layout.ForceDirected(
 **/
 function getCobolParseXML(){
 
-    var fileName = document.querySelector('input[type=file]').files[0].name
+    var fileName = document.getElementById('fileForm').querySelector('input[type=file]').files[0].name
 
     console.log('In getCobolParseXML ');
     let form = new FormData(document.getElementById('fileForm'));
@@ -36,7 +68,6 @@ function getCobolParseXML(){
 		        'resultText' : result
 		   };
            //document.getElementById('results').innerHTML = JSON.stringify(fileData);
-           document.getElementById('results').innerHTML = `Select an element for more info`;
            initEdges();
 	    }
 	};
@@ -45,7 +76,29 @@ function getCobolParseXML(){
 	console.log('request sent : ');
 }
 
+/**
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+**/
 
+function downloadSaveFile(){
+	let saveFile = {};
+	saveFile.filedata = fileData;
+	saveFile.nodes = nodes;
+	console.log(saveFile);
+	//download(saveFile, 'json.save', 'application/x-please-download-me');
+	saveJSON(saveFile, "json.save");
+	return false;
+}
+
+function uploadSaveFile(){
+	
+}
 /**
 * Display details of provided node in the results div
 **/
@@ -91,6 +144,7 @@ function nodeExists(label){
 * Go through all known files and set up graph nodes / edges based on external calls
 **/
 function initEdges(){
+	document.getElementById('results').innerHTML = `Select an element for more info`;
     Object.keys(fileData).forEach((key) => {
         var fkey = key;
         var nodeFrom;
@@ -127,5 +181,36 @@ function initEdges(){
 
         });
     });
-
 }
+
+    
+/* function to save JSON to file from browser
+* adapted from http://bgrins.github.io/devtools-snippets/#console-save
+* @param {Object} data -- json object to save
+* @param {String} file -- file name to save to 
+*/
+function saveJSON(data, filename){
+
+    if(!data) {
+        console.error('No data')
+        return;
+    }
+
+    if(!filename) filename = 'console.json'
+
+    if(typeof data === "object"){
+        data = JSON.stringify(data, undefined, 4)
+    }
+
+    var blob = new Blob([data], {type: 'text/json'}),
+        e    = document.createEvent('MouseEvents'),
+        a    = document.createElement('a')
+
+    a.download = filename
+    a.href = window.URL.createObjectURL(blob)
+    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+    a.dispatchEvent(e)
+}
+
+
