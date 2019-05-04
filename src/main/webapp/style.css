@@ -29,3 +29,11 @@ body{
     align-items: center;
     justify-content: center;
 }
+
+.resultsList{
+    list-style-type: none;
+}
+
+.resultsList li{
+    border-top: 1px grey solid;
+}

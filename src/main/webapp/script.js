@@ -109,23 +109,47 @@ function showDetails(nodeLabel){
         //console.log(JSON.stringify(fileData[nodeLabel]));
         // JSON.stringify(fileData[nodeLabel]);
         let resultsDiv = document.createElement('div');
-        let title = document.createElement('h3');
-        title.innerHTML = nodeLabel;
-        resultsDiv.appendChild(title);
+        //let title = document.createElement('h3');
+        //title.innerHTML = nodeLabel;
+        //resultsDiv.appendChild(title);
 
         var info = fileData[nodeLabel].resultText.cobol;
         let list = document.createElement('ul');
+        list.classList.add('resultsList');
+        //add filename to list
+        let listItem = document.createElement('li');
+        listItem.innerHTML = `<strong>FileName</strong> : ${nodeLabel}`;
+        list.appendChild(listItem);
+
         let keys = Object.keys(info);
+        let date = {};
         for(let i=0; i<keys.length; i++){
+            //recombine any date info
+        	if(keys[i]==='day-date-written'){
+        		date.day = info[keys[i]];
+        	} else if(keys[i]==='month-date-written'){
+        		date.month = info[keys[i]];
+        	} else if(keys[i]==='year-date-written'){
+        		date.year = info[keys[i]];
+        	} else {
+                //otherwise add raw info to list
+	            let listItem = document.createElement('li');
+	            listItem.innerHTML = `<strong>${keys[i]}</strong> : ${JSON.stringify(info[keys[i]])}`;
+	            list.appendChild(listItem);
+            }
+        }
+        //if theres a valid date add it to the list
+        if(Object.keys(date).length===3){
             let listItem = document.createElement('li');
-            listItem.innerHTML = `${keys[i]} : ${JSON.stringify(info[keys[i]])}`;
+            listItem.innerHTML = `<strong>Date written</strong> : ${date.day}-${date.month}-${date.year}`;
             list.appendChild(listItem);
         }
+        //display the list
         resultsDiv.appendChild(list);
         document.getElementById('results').innerHTML = "";
         document.getElementById('results').appendChild(resultsDiv);
     } else {
-        document.getElementById('results').innerHTML = "No further info known about this file, upload file for more statistics";
+        document.getElementById('results').innerHTML = `No further info known about file ${nodeLabel}, upload file for more statistics`;
     }
 }
 
