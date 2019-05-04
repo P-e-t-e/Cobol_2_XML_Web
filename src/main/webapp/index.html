@@ -10,15 +10,43 @@
   integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
   crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<form id="fileForm" enctype="multipart/form-data">
-			<label for="file">Select a file :</label>
-			<input id="file" type="file" name="file"/>
-			<br><br>
-			<button name="submit" type="submit" onClick="getCobolParseXML(); return false;">Submit File</button>
-	</form>
+	<!-- Image and text -->
+	<nav class="navbar navbar-light bg-light">
+		<a class="navbar-brand" href="/">
+			<i class="fa fa-cog" aria-hidden="true"></i>
+		  	Cobol2XML - Cobol parser
+		</a>
+	  </nav>
+	  <div class="container">
+		  <div class="row">
+				<div class="col-md-4 fileForms importCbl">
+						<form id="fileForm" enctype="multipart/form-data">
+							<label for="file">Select a COBOL file :</label>
+							<input id="file" type="file" name="file"/>
+							<br/>
+							<button class="importButton" name="submit" type="submit" onClick="getCobolParseXML(); return false;"><i class="fa fa-upload" aria-hidden="true"></i> Import File</button>
+					</form>
+				</div>
+				<div class="col-md-4 fileForms importSave">
+						<div>
+								<label for="selectFiles">Select a save file :</label>
+								<input type="file" id="selectFiles" value="Import" />
+								<br/>
+								<button class="importButton" id="import"><i class="fa fa-upload" aria-hidden="true"></i> Import Save file</button>
+						</div>
+				</div>
+				<div class="col-md-2 fileForms download">
+					<button name="submit" type="submit" onClick="downloadSaveFile(); return false;"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save state</button>
+				</div>
+		  </div>
+	  </div>
+	  
+	  
+	
 	<!--  <form id="reUpload" enctype="multipart/form-data">
 			<label for="file">Select a saved file :</label>
 			<input id="file" type="file" name="file"/>
@@ -26,17 +54,18 @@
 			<button name="submit" type="submit" onClick="uploadSavedFile(); return false;">Upload</button>
 	</form>-->
 	
-	<button name="submit" type="submit" onClick="downloadSaveFile(); return false;">Download save file</button>
 	
-	<div>
-		<h3>Import saved state</h3>
-		<input type="file" id="selectFiles" value="Import" /><br />
-		<button id="import">Import selected save file</button>
-	</div>
+	
+	
     <!--<input type="file" accept="text/plain" onchange="openFile(event)">-->
-    
-    <div class="canvasContainer"><canvas id="my_canvas" width="600" height="400" /></div>
-    <div id="results"></div>
+    <div class="container">
+		<div class="row">
+				<div class="canvasContainer"><canvas id="my_canvas" width="600" height="400"></div>
+		</div>
+		<div class="row">
+			<div id="results"></div>
+		</div>
+	</div>
 </body>
 
 <script src="springyui.js"></script>

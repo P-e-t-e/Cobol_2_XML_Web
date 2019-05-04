@@ -1,7 +1,31 @@
-#results{
-	border: 1px black solid;
+body{
+    background: whitesmoke;
 }
 
-body{
-	background: grey;
+.fileForms{
+    padding-top: 2em;
+    padding: 1em;
+}
+
+.importCbl{
+    background: rgb(232, 241, 231);
+}
+.importSave{
+    background: rgb(228, 225, 225);
+}
+.download{
+    background: rgb(236, 230, 230);
+}
+.results{
+    background: rgb(217, 224, 224);
+}
+
+.importButton{
+    margin-top: 5px;
+}
+
+.download{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
