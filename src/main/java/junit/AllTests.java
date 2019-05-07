@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ CobolParserTestBasic.class, CobolParserTestCobol.class, CobolParserTestEmptyString.class })
+@SuiteClasses({ CobolParserTestBasic.class, CobolParserTestCobol.class, CobolParserTestEmptyString.class, CobolParserConstantValues.class })
 public class AllTests {
 
 }

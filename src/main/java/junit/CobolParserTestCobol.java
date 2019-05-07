@@ -21,5 +21,4 @@ public class CobolParserTestCobol {
 		Assembly out = p.bestMatch(in);
 		assertFalse( out.stackIsEmpty() );
 	}
-
 }
