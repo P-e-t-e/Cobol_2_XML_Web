@@ -23,6 +23,7 @@ package cobol;
 
 import XMLWriter.*;
 import java.io.*;
+import java.util.Date;
 import java.util.Random;
 
 import javax.swing.JFileChooser;
@@ -89,8 +90,8 @@ public class Cobol2XML {
 		}
 		//System.out.println("Choose an output file");
 		//chooser.showOpenDialog(null);
-	
-		File newFile = xmlp.writeFile(Math.random()*1000 + "file.xml");
+		Date date = new Date();
+		File newFile = xmlp.writeFile(date.getTime() + "_file" + is.hashCode() + ".xml");
 		r.close();
 		return newFile;
 	}

@@ -48,6 +48,8 @@ public class CobolParser {
 		Symbol fullstop = new Symbol('.');
 		fullstop.discard();
 		
+		a.add( constantValue() );
+		
 		a.add( externalCall() );
 		
 		a.add( ProgramID() );
@@ -61,7 +63,17 @@ public class CobolParser {
 		a.add(new Empty());
 		return a;
 	}
-
+	
+	protected Parser constantValue() {
+		//System.out.println("constantValue()");
+		Sequence s = new Sequence();
+		s.add(new Num() );
+		s.add(new Word() );
+		s.add(new CaselessLiteral("value") );
+		s.add(new Num() );
+		s.setAssembler(new ConstantValueAssembler());
+		return s;
+	}
 
 	/**
 	 * Return a parser that will recognise external calls
