@@ -132,9 +132,10 @@ function showDetails(nodeLabel){
         	} else if(keys[i]==='year-date-written'){
         		date.year = info[keys[i]];
         	} else {
-                //otherwise add raw info to list
+                //otherwise add raw info to list (Beautified json with 4 space seperation)
 	            let listItem = document.createElement('li');
-	            listItem.innerHTML = `<strong>${keys[i]}</strong> : ${JSON.stringify(info[keys[i]])}`;
+	            let jsonString = JSON.stringify(info[keys[i]], null, '\t');
+	            listItem.innerHTML = `<strong>${keys[i]}</strong> : ${jsonString}`;
 	            list.appendChild(listItem);
             }
         }
