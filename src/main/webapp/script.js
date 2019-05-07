@@ -209,6 +209,8 @@ function initEdges(){
 }
 
 function saveXMLData(){
+		alert('Currently you cannot re-upload XML data to the app - if you are trying to save the current state' + 
+				' for later use please use the save state feature located above');
 	    let data = '<nodes>' + objectToXml(graph.nodes) + '</nodes>' + 
     			'<edges>' + objectToXml(graph.edges) + '</edges>';
     	saveData(data, 'xml', 'graph.xml');    			
