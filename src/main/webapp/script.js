@@ -92,7 +92,7 @@ function downloadSaveFile(){
 	saveFile.nodes = nodes;
 	console.log(saveFile);
 	//download(saveFile, 'json.save', 'application/x-please-download-me');
-	saveJSON(saveFile, "json.save");
+	saveData(saveFile, 'json', "json.save");
 	return false;
 }
 
@@ -208,34 +208,66 @@ function initEdges(){
     });
 }
 
+function saveXMLData(){
+	    let data = '<nodes>' + objectToXml(graph.nodes) + '</nodes>' + 
+    			'<edges>' + objectToXml(graph.edges) + '</edges>';
+    	saveData(data, 'xml', 'graph.xml');    			
+}
     
 /* function to save JSON to file from browser
 * adapted from http://bgrins.github.io/devtools-snippets/#console-save
 * @param {Object} data -- json object to save
 * @param {String} file -- file name to save to 
 */
-function saveJSON(data, filename){
+function saveData(data, datatype, filename){
 
     if(!data) {
         console.error('No data')
         return;
     }
 
-    if(!filename) filename = 'console.json'
+    if(!filename) filename = 'console.' + datatype;
 
-    if(typeof data === "object"){
+    if(typeof data === "object" && datatype==='json'){
         data = JSON.stringify(data, undefined, 4)
     }
 
-    var blob = new Blob([data], {type: 'text/json'}),
+    var blob = new Blob([data], {type: 'text/' + datatype}),
         e    = document.createEvent('MouseEvents'),
         a    = document.createElement('a')
 
     a.download = filename
     a.href = window.URL.createObjectURL(blob)
-    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+    a.dataset.downloadurl =  ['text/' + datatype, a.download, a.href].join(':')
     e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
     a.dispatchEvent(e)
+}
+
+/**
+* Function to convert from json to xml - adapted from the following online resource
+* http://raathigesh.com/Converting-Json-Object-To-XML-String-In-JavaScript/
+* @param {JSON object} obj - Json object to convert
+* @return {String} xml - XML derived from input json object
+**/
+function objectToXml(obj) {
+        var xml = '';
+        for (var prop in obj) {
+            if (!obj.hasOwnProperty(prop)) {
+                continue;
+            }
+
+            if (obj[prop] == undefined)
+                continue;
+
+            xml += "<" + prop + ">";
+            if (typeof obj[prop] == "object")
+                xml += objectToXml(new Object(obj[prop]));
+            else
+                xml += obj[prop];
+
+            xml += "</" + prop + ">";
+        }
+        return xml;
 }
 
 

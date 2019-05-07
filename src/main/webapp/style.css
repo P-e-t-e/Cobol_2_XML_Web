@@ -37,3 +37,7 @@ body{
 .resultsList li{
     border-top: 1px grey solid;
 }
+
+#dlXMLButton{
+    color: rgb(89, 100, 89);
+}
