@@ -27,7 +27,6 @@ import com.sun.jersey.multipart.FormDataParam;
  */
 @Path("myresource")
 public class MyResource {
-
 	private Cobol2XML parser = new Cobol2XML();
     /**
      * Method handling HTTP POST requests. The returned object will be sent
@@ -35,30 +34,14 @@ public class MyResource {
      *
      * @return String that will be returned as a text/plain response.
      */
-    /*@GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
-    }*/
-	
 	@POST
-	
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response uploadFile(
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
-
-			//String uploadedFileLocation = "C://Users//Warren Kelly//Desktop//RestApi//testFile/" + fileDetail.getFileName();
-			
-
-			// save it
-			//writeToFile(uploadedInputStream, uploadedFileLocation);
-
 			File file;
-
-			System.out.println("Debug: in upload file endpoint");
+			
 			try{
-				System.out.println("Debug: about to parse file");
 				 file = parser.parseText(uploadedInputStream);
 				 String xmlString = "";
 				 Scanner scanner = new Scanner(file);
@@ -73,33 +56,8 @@ public class MyResource {
 			} catch (Exception e){
 				System.out.println("Parser Failed: " + e.getMessage() + e.toString());
 			}
-
-			//String output = "File uploaded to : " + uploadedFileLocation;
-		return Response.status(400).build();
+			return Response.status(400).build();
 		}
-
-		// save uploaded file to new location
-//		private void writeToFile(InputStream uploadedInputStream,
-//			String uploadedFileLocation) {
-//
-//			try {
-//				OutputStream out = new FileOutputStream(new File(
-//						uploadedFileLocation));
-//				int read = 0;
-//				byte[] bytes = new byte[1024];
-//
-//				out = new FileOutputStream(new File(uploadedFileLocation));
-//				while ((read = uploadedInputStream.read(bytes)) != -1) {
-//					out.write(bytes, 0, read);
-//				}
-//				out.flush();
-//				out.close();
-//			} catch (IOException e) {
-//
-//				e.printStackTrace();
-//			}
-//
-//		}
-	
-
 }
+
+

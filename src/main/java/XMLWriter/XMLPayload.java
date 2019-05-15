@@ -60,6 +60,18 @@ public class XMLPayload {
 	public void addElements(Cobol c) {
 		
 		/*
+		 *  add commentLine element
+		 */		
+		String commentLine = c.getCommentLine();
+		if (commentLine != null) {
+			this.addCommentLineElement( commentLine );
+			//System.out.println("Got Section");
+			// Add contents of procedure division
+		} else {
+			//System.out.println("Comment Line null");
+		}
+		
+		/*
 		 * add externalCall element
 		 */
 		String callUsing = c.getCallUsing();
@@ -227,6 +239,17 @@ public class XMLPayload {
 			rootElement.appendChild(cobolname);
 		}
 	}
+ 	
+	void addCommentLineElement(String stringElement) {
+		//  Comment Line element
+		
+		if(stringElement != null) {
+			Element cobolname = doc.createElement("comment");
+			cobolname.appendChild(doc.createTextNode(stringElement));
+			rootElement.appendChild(cobolname);
+		}
+	}
+ 	
 	
 	void addDayDateWrittenElement(int intElement) {
 		//  DayDateWritten element

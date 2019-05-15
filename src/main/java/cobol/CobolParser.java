@@ -60,9 +60,32 @@ public class CobolParser {
 		
 		a.add( DateWritten() );
 		
+		a.add( commentLine() );
+		
 		a.add(new Empty());
 		return a;
 	}
+	
+	/*
+	 * Return a parser that will recognize the grammar:
+	 * 
+	 *    ***--- comment text
+	 *
+	 */
+	protected Parser commentLine() {
+		//System.out.println("commentLine()");
+		Sequence s = new Sequence();
+		s.add(new Symbol("*").discard());
+		s.add(new Symbol("*").discard());
+		s.add(new Symbol("*").discard());
+		s.add(new Symbol("-").discard());
+		s.add(new Symbol("-").discard());
+		s.add(new Symbol("-").discard());
+		s.add(new Word() );
+		s.setAssembler(new CommentLineAssembler());
+		return s;
+	}
+
 	
 	protected Parser constantValue() {
 		//System.out.println("constantValue()");

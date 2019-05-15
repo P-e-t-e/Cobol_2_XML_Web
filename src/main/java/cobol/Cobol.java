@@ -35,7 +35,14 @@ public class Cobol implements PubliclyCloneable {
 	protected String constantName;
 	protected double constantValue;
 	protected int lineNumber = 0;
+	protected String commentLine;
 
+	public String getCommentLine() {
+		return commentLine;
+	}
+	public void setCommentLine(String commentLine) {
+		this.commentLine = commentLine;
+	}
 	public String getConstantName() {
 		return constantName;
 	}

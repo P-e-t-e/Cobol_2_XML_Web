@@ -50,21 +50,7 @@ public class Cobol2XML {
 	public File parseText(InputStream input) throws Exception {
 		System.out.println("Cobol2XML V0.1.0");
 		XMLPayload xmlp = new XMLPayload();
-		
-		/* The first command line paprameter is used to get the cobol source file namee
-		 * In case you are not sure if you are pointing toward the right file, print out the filename
-		 * like this...
-		 *
-		 * System.out.println("arg[0]" + args[0]);
-		 */
-		
-		/*
-		 * A rather crude approach is to hard code the filename for the cobol source file, like this
-		 * InputStream is = new FileInputStream("C:\\Users\\sgs442\\eclipse-workspace\\CobolParser1\\base.cbl");
-		 */
-//		JFileChooser chooser = new JFileChooser();
-//		System.out.println("Choose an input file");
-//		chooser.showOpenDialog(null);
+
 		InputStream is = input;
 		BufferedReader r = 	new BufferedReader(new InputStreamReader(is));
 
@@ -88,8 +74,6 @@ public class Cobol2XML {
 				xmlp.addElements(c); 
 			
 		}
-		//System.out.println("Choose an output file");
-		//chooser.showOpenDialog(null);
 		Date date = new Date();
 		File newFile = xmlp.writeFile(date.getTime() + "_file" + is.hashCode() + ".xml");
 		r.close();

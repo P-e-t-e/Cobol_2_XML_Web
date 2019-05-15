@@ -52,8 +52,6 @@ var layout = new Springy.Layout.ForceDirected(
 function getCobolParseXML(){
 
     var fileName = document.getElementById('fileForm').querySelector('input[type=file]').files[0].name
-
-    console.log('In getCobolParseXML ');
     let form = new FormData(document.getElementById('fileForm'));
 	var xhttp = new XMLHttpRequest();
 	let result = {};
@@ -62,12 +60,9 @@ function getCobolParseXML(){
 	    console.log('response recieved : ');
 	       // Typical action to be performed when the document is ready:
 	       result = JSON.parse(xhttp.responseText);
-           console.log(result);
-           console.log(fileName);
 	       fileData[fileName] = {
 		        'resultText' : result
 		   };
-           //document.getElementById('results').innerHTML = JSON.stringify(fileData);
            initEdges();
 	    }
 	};
@@ -171,6 +166,7 @@ function nodeExists(label){
 function initEdges(){
 	document.getElementById('results').innerHTML = `Select an element for more info`;
     Object.keys(fileData).forEach((key) => {
+        //for each uploaded file in the fileData variable
         var fkey = key;
         var nodeFrom;
         if(nodeExists(key)){
@@ -181,8 +177,9 @@ function initEdges(){
         }
         console.log(fileData[key]);
         fileData[key].resultText.cobol.call.forEach((call) => {
-            if(!fileData[call.path]){ //if the node for the call dosent exist then create it
-                //nodes[call.path] = graph.newNode({label: call.path}); //make a node
+            //for each call in the file
+            if(!fileData[call.path]){ 
+                //if the nodes and edges dont exist then create them
                 var nodeTo;
                 if(nodeExists(call.path)){
                     nodeTo = nodes[call.path];
@@ -203,7 +200,6 @@ function initEdges(){
                     console.log('edge exists');
                 }               
             }
-
         });
     });
 }
